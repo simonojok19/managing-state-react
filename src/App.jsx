@@ -4,10 +4,15 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { getProducts } from "./services/productService";
 import Spinner from "./Spinner";
+import useFetch from "./services/useFetch";
 
 export default function App() {
   const [size, setSize] = useState("");
-
+  const {
+    data: products,
+    error,
+    loading,
+  } = useFetch("products?category=shoes");
   if (error) throw error;
   if (loading) return <Spinner />;
 
