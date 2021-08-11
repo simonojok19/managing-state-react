@@ -7,23 +7,6 @@ import Spinner from "./Spinner";
 
 export default function App() {
   const [size, setSize] = useState("");
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function init() {
-      try {
-        const response = await getProducts("shoes");
-        setProducts(response);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    init().then();
-  }, []);
 
   if (error) throw error;
   if (loading) return <Spinner />;
