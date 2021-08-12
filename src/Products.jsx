@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Spinner from "./Spinner";
 import useFetch from "./services/useFetch";
 import { useParams } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 
 export default function Products() {
   const [size, setSize] = useState("");
@@ -13,6 +14,7 @@ export default function Products() {
   } = useFetch("products?category=" + category);
   if (error) throw error;
   if (loading) return <Spinner />;
+  if (products.length === 0) return <PageNotFound />;
 
   function renderProduct(p) {
     return (
