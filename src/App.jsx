@@ -22,9 +22,11 @@ export default function App() {
   };
   const updateQuantity = (sku, quantity) => {
     setCart((items) => {
-      return items.map((item) =>
-        item.sku === sku ? { ...item, quantity } : item
-      );
+      return quantity === 0
+        ? items.filter((item) => item.sku !== sku)
+        : items.map((item) =>
+            item.sku === sku ? { ...item, quantity } : item
+          );
     });
   };
   return (
