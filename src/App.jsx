@@ -9,7 +9,11 @@ import Cart from "./Cart";
 
 export default function App() {
   const [cart, setCart] = useState(() => {
-    return JSON.parse(localStorage.getItem("cart"));
+    try {
+      return JSON.parse(localStorage.getItem("cart")) ?? [];
+    } catch (e) {
+      return [];
+    }
   });
 
   useEffect(() => {
