@@ -32,7 +32,7 @@ export default function useFetch(url) {
   return { data, error, loading };
 }
 
-export function Fetch({ render, url }) {
+export function Fetch({ children, url }) {
   const { data, loading, error } = useFetch(url);
-  return render(data, loading, error);
+  return children(data, loading, error);
 }

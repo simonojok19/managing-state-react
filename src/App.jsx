@@ -8,6 +8,7 @@ import Detail from "./Detail";
 import Cart from "./Cart";
 import { useCart } from "./cartContext";
 import CheckoutClass from "./CheckoutClass";
+import DetailClass from "./DetailClass";
 
 export default function App() {
   const { dispatch } = useCart();
@@ -19,7 +20,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<h1>Welcome to Home</h1>} />
             <Route path="/:category" element={<Products />} />
-            <Route path="/:category/:id" element={<Detail />} />
+            <Route path="/:category/:id" element={<DetailClass />} />
             <Route path="/cart" element={<Cart />} />
             <Route
               path="/checkout"
