@@ -21,31 +21,11 @@ export default function App() {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (id, sku) => {
-    setCart((items) => {
-      const itemInCart = items.find((i) => i.sku === sku);
-      if (itemInCart) {
-        return items.map((i) =>
-          i.sku === sku ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      }
-      return [...items, { id, sku, quantity: 1 }];
-    });
-  };
+  const addToCart = (id, sku) => {};
 
-  const updateQuantity = (sku, quantity) => {
-    setCart((items) => {
-      return quantity === 0
-        ? items.filter((item) => item.sku !== sku)
-        : items.map((item) =>
-            item.sku === sku ? { ...item, quantity } : item
-          );
-    });
-  };
+  const updateQuantity = (sku, quantity) => {};
 
-  const emptyCart = () => {
-    setCart([]);
-  };
+  const emptyCart = () => {};
 
   return (
     <>
