@@ -25,21 +25,21 @@ export default class CheckoutClass extends React.Component {
 
   // Derived State
 
-  isValid() {
+  isValid = () => {
     const errors = this.getErrors(this.state.address);
     return Object.keys(errors).length === 0;
-  }
+  };
 
-  handleChange(e) {
+  handleChange = (e) => {
     e.persist();
     this.setState((prevState) => {
       return {
         address: { ...prevState.address, [e.target.id]: e.target.value },
       };
     });
-  }
+  };
 
-  handleBlur(event) {
+  handleBlur = (event) => {
     event.persist();
     this.setState((prevState) => {
       return {
@@ -49,9 +49,9 @@ export default class CheckoutClass extends React.Component {
         },
       };
     });
-  }
+  };
 
-  async handleSubmit(event) {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ status: STATUS.SUBMITTING });
     if (this.isValid()) {
@@ -65,14 +65,14 @@ export default class CheckoutClass extends React.Component {
     } else {
       this.setState({ status: STATUS.SUBMITTED });
     }
-  }
+  };
 
-  getErrors(address) {
+  getErrors = (address) => {
     const result = {};
     if (!address.city) result.city = "City is Required";
     if (!address.country) result.country = "Country is Required";
     return result;
-  }
+  };
 
   render() {
     const { status, saveError, touched, address } = this.state;
