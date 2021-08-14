@@ -17,56 +17,63 @@ class Detail extends React.Component {
     sku: "",
   };
 
-  static contextType = CartContext;
-
   render() {
     const { id, navigate } = this.props;
     const { sku } = this.state;
     return (
-      <Fetch url={`products/${id}`}>
-        {({ loading, error, data: product }) => {
-          if (loading) return <Spinner />;
-          if (!product) return <PageNotFound />;
-          if (error) throw error;
-
+      <CartContext.Consumer>
+        {({ dispatch }) => {
           return (
-            <div id="detail">
-              <h1>{product.name}</h1>
-              <p>{product.description}</p>
-              <p id="price">${product.price}</p>
-              <select
-                id="size"
-                value={sku}
-                onChange={(e) => this.setState({ sku: e.target.value })}
-              >
-                <option value="">What Size?</option>
-                {product.skus.map((sku) => (
-                  <option value={sku.sku} key={sku.sku}>
-                    {sku.size}
-                  </option>
-                ))}
-              </select>
-              <p>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    this.context.dispatch({
-                      type: ACTION_TYPE.ADD_TO_CART,
-                      id,
-                      sku,
-                    });
-                    navigate("/cart");
-                  }}
-                  disabled={!sku}
-                >
-                  Add To Cart
-                </button>
-              </p>
-              <img src={`/images/${product.image}`} alt={product.category} />
-            </div>
+            <Fetch url={`products/${id}`}>
+              {({ loading, error, data: product }) => {
+                if (loading) return <Spinner />;
+                if (!product) return <PageNotFound />;
+                if (error) throw error;
+
+                return (
+                  <div id="detail">
+                    <h1>{product.name}</h1>
+                    <p>{product.description}</p>
+                    <p id="price">${product.price}</p>
+                    <select
+                      id="size"
+                      value={sku}
+                      onChange={(e) => this.setState({ sku: e.target.value })}
+                    >
+                      <option value="">What Size?</option>
+                      {product.skus.map((sku) => (
+                        <option value={sku.sku} key={sku.sku}>
+                          {sku.size}
+                        </option>
+                      ))}
+                    </select>
+                    <p>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          dispatch({
+                            type: ACTION_TYPE.ADD_TO_CART,
+                            id,
+                            sku,
+                          });
+                          navigate("/cart");
+                        }}
+                        disabled={!sku}
+                      >
+                        Add To Cart
+                      </button>
+                    </p>
+                    <img
+                      src={`/images/${product.image}`}
+                      alt={product.category}
+                    />
+                  </div>
+                );
+              }}
+            </Fetch>
           );
         }}
-      </Fetch>
+      </CartContext.Consumer>
     );
   }
 }
