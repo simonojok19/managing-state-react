@@ -17,6 +17,9 @@ class Detail extends React.Component {
     sku: "",
   };
 
+  // this.context.dispatch()
+  static contextType = CartContext;
+
   render() {
     const { id, navigate } = this.props;
     const { sku } = this.state;
