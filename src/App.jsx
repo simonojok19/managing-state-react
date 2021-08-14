@@ -7,11 +7,10 @@ import { Routes, Route } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-import CartContextProvider from "./cartContext";
 
 export default function App() {
   return (
-    <CartContextProvider>
+    <>
       <div className="content">
         <Header />
         <main>
@@ -31,6 +30,6 @@ export default function App() {
         </main>
       </div>
       <Footer />
-    </CartContextProvider>
+    </>
   );
 }
