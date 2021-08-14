@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import cartReducer from "./cartReducer";
 
-export const CartContext = React.createContext(null);
+const CartContext = React.createContext(null);
+
 const getInitialCart = () => {
   try {
     return JSON.parse(localStorage.getItem("cart")) ?? [];
@@ -21,4 +22,8 @@ export default function CartContextProvider({ children }) {
       {children}
     </CartContext.Provider>
   );
+}
+
+export function useCart() {
+  return useContext(CartContext);
 }
