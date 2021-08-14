@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -21,7 +21,7 @@ export default function App() {
   const [state, dispatch] = useReducer(cartReducer, getInitialCart());
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(state));
   }, [state]);
 
   return (
@@ -42,7 +42,7 @@ export default function App() {
             />
             <Route
               path="/checkout"
-              element={<Checkout cart={this.state.} dispatch={dispatch} />}
+              element={<Checkout cart={state} dispatch={dispatch} />}
             />
           </Routes>
         </main>
