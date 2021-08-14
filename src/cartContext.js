@@ -25,5 +25,11 @@ export default function CartContextProvider({ children }) {
 }
 
 export function useCart() {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error(
+      "useCart must be used within a CartProvider, Wrap the App component in <CartContextProvider>"
+    );
+  }
+  return context;
 }
