@@ -1,15 +1,15 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useFetch, { Fetch } from "./services/useFetch";
+import { Fetch } from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 import { ACTION_TYPE } from "./cartReducer";
-import { useCart } from "./cartContext";
+import { CartContext, useCart } from "./cartContext";
+
 export default function DetailClass() {
-  const { dispatch } = useCart();
   const { id } = useParams();
   const navigate = useNavigate();
-  return <Detail id={id} dispatch={dispatch} navigate={navigate} />;
+  return <Detail id={id} navigate={navigate} />;
 }
 
 class Detail extends React.Component {
@@ -17,8 +17,10 @@ class Detail extends React.Component {
     sku: "",
   };
 
+  static contextType = CartContext;
+
   render() {
-    const { id, navigate, dispatch } = this.props;
+    const { id, navigate } = this.props;
     const { sku } = this.state;
     return (
       <Fetch url={`products/${id}`}>
@@ -48,7 +50,11 @@ class Detail extends React.Component {
                 <button
                   className="btn btn-primary"
                   onClick={() => {
-                    dispatch({ type: ACTION_TYPE.ADD_TO_CART, id, sku });
+                    this.context.dispatch({
+                      type: ACTION_TYPE.ADD_TO_CART,
+                      id,
+                      sku,
+                    });
                     navigate("/cart");
                   }}
                   disabled={!sku}
