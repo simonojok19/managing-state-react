@@ -8,6 +8,7 @@ import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import cartReducer from "./cartReducer";
+import CartContextProvider from "./cartContext";
 
 const getInitialCart = () => {
   try {
@@ -25,7 +26,7 @@ export default function App() {
   }, [state]);
 
   return (
-    <>
+    <CartContextProvider value={{ state, dispatch }}>
       <div className="content">
         <Header />
         <main>
@@ -36,10 +37,7 @@ export default function App() {
               path="/:category/:id"
               element={<Detail dispatch={dispatch} />}
             />
-            <Route
-              path="/cart"
-              element={<Cart cart={state} dispatch={dispatch} />}
-            />
+            <Route path="/cart" element={<Cart />} />
             <Route
               path="/checkout"
               element={<Checkout cart={state} dispatch={dispatch} />}
@@ -48,6 +46,6 @@ export default function App() {
         </main>
       </div>
       <Footer />
-    </>
+    </CartContextProvider>
   );
 }
