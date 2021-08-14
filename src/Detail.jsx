@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
+import { ACTION_TYPE } from "./cartReducer";
 
-export default function Detail({ addToCart }) {
+export default function Detail({ dispatch }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [sku, setSku] = useState();
@@ -31,7 +32,7 @@ export default function Detail({ addToCart }) {
         <button
           className="btn btn-primary"
           onClick={() => {
-            addToCart(id, sku);
+            dispatch({ type: ACTION_TYPE.ADD_TO_CART, id, sku });
             navigate("/cart");
           }}
           disabled={!sku}

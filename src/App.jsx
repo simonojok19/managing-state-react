@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -7,25 +7,22 @@ import { Routes, Route } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
+import cartReducer from "./cartReducer";
+
+const getInitialCart = () => {
+  try {
+    return JSON.parse(localStorage.getItem("cart")) ?? [];
+  } catch (e) {
+    return [];
+  }
+};
 
 export default function App() {
-  const [cart, setCart] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("cart")) ?? [];
-    } catch (e) {
-      return [];
-    }
-  });
+  const [state, dispatch] = useReducer(cartReducer, getInitialCart());
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (id, sku) => {};
-
-  const updateQuantity = (sku, quantity) => {};
-
-  const emptyCart = () => {};
+  }, [state]);
 
   return (
     <>
@@ -37,15 +34,15 @@ export default function App() {
             <Route path="/:category" element={<Products />} />
             <Route
               path="/:category/:id"
-              element={<Detail addToCart={addToCart} />}
+              element={<Detail dispatch={dispatch} />}
             />
             <Route
               path="/cart"
-              element={<Cart cart={cart} updateQuantity={updateQuantity} />}
+              element={<Cart cart={state} dispatch={dispatch} />}
             />
             <Route
               path="/checkout"
-              element={<Checkout cart={cart} emptyCart={emptyCart} />}
+              element={<Checkout cart={this.state.} dispatch={dispatch} />}
             />
           </Routes>
         </main>
